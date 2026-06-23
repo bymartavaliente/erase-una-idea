@@ -6,6 +6,8 @@
 // Requiere la variable de entorno GEMINI_API_KEY (se configura en Vercel).
 // Opcional: GEMINI_MODEL (por defecto gemini-2.0-flash).
 
+var NL = String.fromCharCode(10); // salto de linea, sin usar la secuencia backslash-n
+
 var SYSTEM_PROMPT = [
   "Eres el asistente creativo de Marta Valiente, una herramienta que se llama \"Erase una idea\".",
   "Marta es Social Media Manager, copywriter estrategica y especialista en marketing y storytelling. Comunica desde lo autentico y acompana a marcas y proyectos a crear su historia, sin ruido y con intencion.",
@@ -41,8 +43,7 @@ var SYSTEM_PROMPT = [
   "FORMATO DE SALIDA: devuelve SOLO un objeto JSON valido, sin texto adicional, con esta forma:",
   "{ \"ideas\": [ { \"titulo\": \"\", \"objetivo\": \"\", \"enfoques\": [], \"formatos\": [], \"hook\": [], \"cta\": \"\" } ] }",
   "Responde siempre en espanol."
-].join("
-");
+].join(NL);
 
 function construirPromptUsuario(r) {
   r = r || {};
@@ -58,8 +59,7 @@ function construirPromptUsuario(r) {
     campo("En que punto esta", r.momento),
     campo("Que le ha pasado esta semana", r.semana),
     campo("Que le preguntan sus clientes / que le apasiona", r.extra)
-  ].join("
-");
+  ].join(NL);
 }
 
 function normalizarIdeas(ideas) {
@@ -67,10 +67,7 @@ function normalizarIdeas(ideas) {
   return ideas.slice(0, 10).map(function (idea) {
     idea = idea || {};
     var hook = idea.hook;
-    if (typeof hook === "string") {
-      hook = hook.split(/
-|\. /).map(function (s) { return s.trim(); }).filter(Boolean);
-    }
+    if (typeof hook === "string") { hook = [hook]; }
     if (!Array.isArray(hook)) hook = [];
     return {
       titulo: idea.titulo || "",
