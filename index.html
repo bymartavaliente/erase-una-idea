@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&Eacute;rase una idea - Marta Valiente</title>
+  <meta name="description" content="Erase una idea. Convierte lo que vives en contenido con sentido. Sin ruido y con intencion." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rosa-fondo: #FFEEF5; --rosa-medio: #FFD6E2; --titulo: #FF335E;
+      --complementario: #893434; --tinta: #1A1A1A; --crema: #FFF8FB;
+      --rojo-acento: #F70328;
+      --acento-suave: rgba(255,51,94,0.10);
+      --font-display: "Extenda 80 Peta","Playfair Display",Georgia,serif;
+      --font-serif: "Playfair Display",Georgia,"Times New Roman",serif;
+      --font-body: "Boston Angel","Mulish",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --radio: 18px; --radio-sm: 12px;
+      --sombra: 0 18px 50px -24px rgba(255,51,94,0.35);
+      --sombra-sutil: 0 6px 24px -16px rgba(137,52,52,0.25);
+      --ancho: 640px; --transicion: 480ms cubic-bezier(0.22,1,0.36,1);
+    }
+    @font-face { font-family:"Extenda 80 Peta"; src:url("./fonts/Extenda80Peta.woff2") format("woff2"); font-display:swap; }
+    @font-face { font-family:"Boston Angel"; src:url("./fonts/BostonAngel.woff2") format("woff2"); font-display:swap; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:var(--font-body); color:var(--tinta);
+      background:linear-gradient(165deg,var(--rosa-fondo) 0%,var(--crema) 60%,var(--rosa-fondo) 130%);
+      min-height:100vh; line-height:1.6; -webkit-font-smoothing:antialiased;
+      display:flex; flex-direction:column; position:relative; overflow-x:hidden;
+    }
+    .deco { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+    .blob { position:absolute; border-radius:50% 50% 48% 52% / 55% 45% 55% 45%; filter:blur(45px); }
+    .blob.b1 { width:360px; height:360px; background:#FFC4D3; opacity:0.55; top:-90px; right:-70px; }
+    .blob.b2 { width:320px; height:320px; background:var(--titulo); opacity:0.10; bottom:-110px; left:-90px; }
+    .blob.b3 { width:240px; height:240px; background:var(--complementario); opacity:0.07; top:42%; left:-70px; }
+    .app { position:relative; z-index:1; flex:1; width:100%; max-width:var(--ancho); margin:0 auto; padding:7vh 24px 40px; display:flex; flex-direction:column; justify-content:center; }
+    .footer { position:relative; z-index:1; text-align:center; padding:24px; font-size:0.82rem; color:rgba(137,52,52,0.6); }
+    .footer a { color:var(--titulo); text-decoration:none; }
+    .footer a:hover { text-decoration:underline; }
+    .screen { animation:aparecer var(--transicion) both; }
+    @keyframes aparecer { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+    .eyebrow { font-family:var(--font-body); text-transform:uppercase; letter-spacing:0.18em; font-size:0.72rem; font-weight:700; color:var(--complementario); margin-bottom:18px; }
+    h1.display { font-family:var(--font-display); font-weight:700; font-size:clamp(2.6rem,8vw,4.4rem); line-height:1.02; letter-spacing:-0.01em; margin-bottom:22px; color:var(--titulo); }
+    h2.titulo { font-family:var(--font-serif); font-weight:700; font-size:clamp(1.7rem,5vw,2.5rem); line-height:1.15; margin-bottom:14px; color:var(--titulo); }
+    .lead { font-size:clamp(1.05rem,2.4vw,1.25rem); max-width:40ch; }
+    .claves { margin:6px 0 16px; font-family:var(--font-serif); font-size:clamp(1.05rem,2.6vw,1.35rem); color:var(--tinta); line-height:1.4; }
+    .claves p { margin:8px 0; }
+    .historia { font-size:clamp(1rem,2.2vw,1.12rem); color:rgba(26,26,26,0.78); max-width:48ch; }
+    .historia p { margin-bottom:12px; }
+    .lead .line { display:block; }
+    .sub { color:rgba(26,26,26,0.66); font-size:1rem; margin-top:6px; }
+    .micro { font-size:0.85rem; color:rgba(137,52,52,0.6); margin-top:22px; }
+    .btn { font-family:var(--font-body); font-weight:700; font-size:1.02rem; border:none; border-radius:999px; padding:16px 34px; cursor:pointer; transition:transform 180ms ease,box-shadow 180ms ease,background 180ms ease; display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
+    .btn-primary { background:var(--rojo-acento); color:#fff; box-shadow:0 18px 50px -24px rgba(247,3,40,0.40); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 24px 60px -22px rgba(247,3,40,0.55); }
+    .btn-primary:active { transform:translateY(0); }
+    .btn-ghost { background:transparent; color:var(--tinta); padding:14px 22px; }
+    .btn-ghost:hover { color:var(--titulo); }
+    .btn-secondary { background:#fff; color:var(--tinta); border:1.5px solid var(--rosa-medio); box-shadow:var(--sombra-sutil); }
+    .btn-secondary:hover { border-color:var(--titulo); color:var(--titulo); transform:translateY(-2px); }
+    .acciones { display:flex; align-items:center; gap:8px; margin-top:34px; flex-wrap:wrap; }
+    .acciones.justo { justify-content:space-between; }
+    .progreso { display:flex; align-items:center; gap:9px; margin-bottom:40px; }
+    .progreso .punto { width:9px; height:9px; border-radius:50%; background:var(--rosa-medio); transition:all 300ms ease; }
+    .progreso .punto.activo { background:var(--titulo); transform:scale(1.35); }
+    .progreso .punto.hecho { background:var(--titulo); }
+    .progreso .etiqueta { margin-left:10px; font-size:0.8rem; letter-spacing:0.06em; color:rgba(137,52,52,0.6); text-transform:lowercase; }
+    .campo { width:100%; margin-top:26px; }
+    textarea.entrada, input.entrada { width:100%; font-family:var(--font-body); font-size:1.1rem; color:var(--tinta); background:rgba(255,255,255,0.75); border:1.5px solid var(--rosa-medio); border-radius:var(--radio); padding:18px 20px; resize:vertical; transition:border-color 180ms ease,box-shadow 180ms ease,background 180ms ease; }
+    textarea.entrada { min-height:120px; line-height:1.55; }
+    textarea.entrada:focus, input.entrada:focus { outline:none; border-color:var(--titulo); background:#fff; box-shadow:0 0 0 4px var(--acento-suave); }
+    textarea.entrada::placeholder, input.entrada::placeholder { color:rgba(26,26,26,0.32); }
+    .opciones { display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; }
+    .chip { font-family:var(--font-body); font-size:1rem; padding:12px 20px; border-radius:999px; border:1.5px solid var(--rosa-medio); background:rgba(255,255,255,0.75); cursor:pointer; transition:all 160ms ease; }
+    .chip:hover { border-color:var(--titulo); transform:translateY(-1px); }
+    .chip.sel { background:var(--titulo); color:#fff; border-color:var(--titulo); box-shadow:var(--sombra); }
+    .nudge { color:var(--titulo); font-size:0.85rem; margin-top:12px; min-height:1.2em; }
+    .buscando { text-align:center; display:grid; place-items:center; gap:26px; min-height:50vh; }
+    .scanner { width:130px; height:130px; border-radius:50%; position:relative; display:grid; place-items:center; }
+    .scanner::before, .scanner::after { content:""; position:absolute; border-radius:50%; border:2px solid var(--rosa-medio); inset:0; animation:pulso 2.4s ease-out infinite; }
+    .scanner::after { animation-delay:1.2s; }
+    @keyframes pulso { 0%{transform:scale(0.6);opacity:0;} 35%{opacity:0.7;} 100%{transform:scale(1.1);opacity:0;} }
+    .scanner .nucleo { width:16px; height:16px; border-radius:50%; background:var(--titulo); box-shadow:0 0 0 8px var(--acento-suave); }
+    .buscando .mensaje { font-family:var(--font-serif); font-size:clamp(1.3rem,4vw,1.8rem); max-width:24ch; min-height:2.4em; transition:opacity 400ms ease; color:var(--titulo); }
+    .cabecera-res { margin-bottom:8px; }
+    .lista-ideas { display:grid; gap:16px; margin-top:28px; }
+    .idea { background:#fff; border:1.5px solid var(--rosa-medio); border-radius:var(--radio); overflow:hidden; box-shadow:var(--sombra-sutil); transition:border-color 200ms ease; }
+    .idea:hover { border-color:var(--titulo); }
+    .idea-cab { display:flex; align-items:flex-start; gap:14px; padding:20px 22px; cursor:pointer; user-select:none; }
+    .idea-num { font-family:var(--font-display); font-size:1.05rem; color:var(--titulo); background:var(--acento-suave); border-radius:10px; min-width:38px; height:38px; display:grid; place-items:center; flex-shrink:0; }
+    .idea-tit { font-family:var(--font-serif); font-weight:700; font-size:1.18rem; line-height:1.25; flex:1; color:var(--tinta); }
+    .idea-obj { display:inline-block; margin-top:6px; font-size:0.74rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--complementario); }
+    .chevron { flex-shrink:0; transition:transform 260ms ease; color:var(--titulo); margin-top:6px; }
+    .idea.abierta .chevron { transform:rotate(180deg); }
+    .idea-cuerpo { max-height:0; overflow:hidden; transition:max-height 360ms ease; }
+    .idea.abierta .idea-cuerpo { max-height:820px; }
+    .idea-cuerpo-inner { padding:0 22px 22px 74px; }
+    .bloque { margin-top:16px; }
+    .bloque .etq { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--titulo); font-weight:700; display:block; margin-bottom:6px; }
+    .bloque ul { list-style:none; display:flex; flex-wrap:wrap; gap:8px; }
+    .bloque ul li { background:var(--rosa-fondo); border-radius:999px; padding:5px 13px; font-size:0.9rem; }
+    .bloque .cita { font-family:var(--font-serif); font-style:italic; font-size:1.05rem; border-left:3px solid var(--titulo); padding-left:14px; line-height:1.4; }
+    .cierre { text-align:center; }
+    .cierre .frase { font-family:var(--font-serif); font-size:clamp(1.6rem,5vw,2.3rem); line-height:1.3; margin-bottom:10px; color:var(--tinta); }
+    .cierre .frase .acento { color:var(--titulo); }
+    .cierre .acciones { justify-content:center; margin-top:30px; }
+    .aviso { background:var(--acento-suave); border:1px solid var(--rosa-medio); border-radius:var(--radio-sm); padding:12px 16px; font-size:0.85rem; color:var(--complementario); margin-top:18px; }
+    @media (max-width:560px) { .app{padding:5vh 18px 30px;} .idea-cuerpo-inner{padding-left:22px;} .acciones.justo{gap:4px;} }
+  </style>
+</head>
+<body>
+  <div class="deco" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  </div>
+  <main id="app" class="app"></main>
+  <footer class="footer">
+    <p>&Eacute;rase una idea - una herramienta de <a href="https://www.martavaliente.com" target="_blank" rel="noopener">Marta Valiente</a></p>
+  </footer>
+  <script>
+  (function () {
+    "use strict";
+    var app = document.getElementById("app");
+
+    var PREGUNTAS = [
+      { id:"dedicas", tipo:"texto", requerida:true, titulo:"\u00bfA qu\u00e9 te dedicas?", ayuda:"En una frase, como se lo contar\u00edas a alguien tomando un caf\u00e9.", placeholder:"Ej: ayudo a marcas peque\u00f1as a contar su historia" },
+      { id:"objetivo", tipo:"opciones", multiple:true, titulo:"\u00bfQu\u00e9 quieres conseguir?", ayuda:"Toca lo que m\u00e1s te importa ahora. Puedes elegir varias.", opciones:["Que me conozcan","Crear comunidad","Aumentar ventas","Posicionarme como referente","Generar confianza"] },
+      { id:"momento", tipo:"opciones", multiple:false, titulo:"\u00bfEn qu\u00e9 punto est\u00e1s?", ayuda:"Para entender desde d\u00f3nde partes.", opciones:["Empiezo de cero","Publico, pero sin rumbo","Quiero subir el nivel"] },
+      { id:"semana", tipo:"texto", requerida:true, largo:true, titulo:"\u00bfQu\u00e9 te ha pasado esta semana?", ayuda:"Algo normal. Una charla, un cliente, una duda, una alegr\u00eda. Sin filtros. Ah\u00ed suele esconderse lo bueno.", placeholder:"Esta semana..." },
+      { id:"extra", tipo:"texto", requerida:false, largo:true, titulo:"Y una \u00faltima cosa...", ayuda:"\u00bfQu\u00e9 te preguntan siempre tus clientes? \u00bfO qu\u00e9 tema te apasiona y podr\u00edas hablar horas? Lo que te salga.", placeholder:"Lo que quieras contarme (opcional)" },
+    ];
+
+    var MENSAJES_BUSQUEDA = ["Pasando las p\u00e1ginas de tu semana...","Sin prisa. Con intenci\u00f3n.","Buscando las historias que ya tienes...","Toda gran historia empieza por algo peque\u00f1o."];
+
+    var estado = { indice:0, respuestas:{}, opciones:{}, email:"", ideas:[], modoDemo:false };
+
+    function montar(html){ app.innerHTML = '<section class="screen">'+html+'</section>'; }
+    function escapar(txt){ var d=document.createElement("div"); d.textContent = txt==null?"":String(txt); return d.innerHTML; }
+    function lineas(arr){ return (arr||[]).map(escapar).join("<br/>"); }
+
+    function pantallaBienvenida(){
+      montar(
+        '<p class="eyebrow">\u00c9rase una idea</p>'+
+        '<h1 class="display">\u00c9rase una vez...</h1>'+
+        '<div class="historia">'+
+          '<p>Una persona que cre\u00eda que su problema para crear contenido era la falta de ideas. No es que no tuviera \u2014creaba contenido\u2014, pero todo le sal\u00eda gen\u00e9rico y sus publicaciones no recib\u00edan interacci\u00f3n.</p>'+
+          '<p>Se frustraba. Pensaba que quiz\u00e1 el problema era su sector... aunque a la competencia s\u00ed le funcionaba.</p>'+
+          '<p>Hasta que encontr\u00f3 este cuestionario. Lleg\u00f3 su hada madrina valiente.</p>'+
+        '</div>'+
+        '<div class="claves">'+
+          '<p>\u2b50 Con solo 5 preguntas te doy 10 ideas de contenido.</p>'+
+          '<p>\u2b50 \u00bfC\u00f3mo? Conoci\u00e9ndote un poco y, sobre todo, lo que escuchas de tus clientes (eso es contenido en estado puro).</p>'+
+        '</div>'+
+        '<p class="lead">\ud83d\udc49 As\u00ed que hazlo y tendr\u00e1s tu final de cuento.</p>'+
+        '<div class="acciones"><button class="btn btn-primary" id="empezar">Empezar \u2192</button></div>'+
+        '<p class="micro">Menos de 1 minuto - sin ruido</p>'
+      );
+      document.getElementById("empezar").addEventListener("click", function(){ estado.indice=0; pantallaPregunta(); });
+    }
+
+    function pantallaPregunta(){
+      var q=PREGUNTAS[estado.indice];
+      var esUltima=estado.indice===PREGUNTAS.length-1;
+      var puntos=PREGUNTAS.map(function(_,i){ var cls=i===estado.indice?"activo":i<estado.indice?"hecho":""; return '<span class="punto '+cls+'"></span>'; }).join("");
+
+      var cuerpo="";
+      if(q.tipo==="texto"){
+        var valor=estado.respuestas[q.id]||"";
+        cuerpo = '<div class="campo"><textarea class="entrada" id="resp" placeholder="'+escapar(q.placeholder)+'" '+(q.largo?'':'rows="2"')+'>'+escapar(valor)+'</textarea></div>';
+      } else {
+        var sel=estado.opciones[q.id]||[];
+        var chips=q.opciones.map(function(op){
+          var activa=sel.indexOf(op)>=0?" sel":"";
+          return '<button type="button" class="chip'+activa+'" data-op="'+escapar(op)+'">'+escapar(op)+'</button>';
+        }).join("");
+        cuerpo = '<div class="opciones" id="opciones">'+chips+'</div>';
+      }
+
+      montar(
+        '<div class="progreso">'+puntos+'<span class="etiqueta">tu historia</span></div>'+
+        '<h2 class="titulo">'+escapar(q.titulo)+'</h2>'+
+        '<p class="sub">'+escapar(q.ayuda)+'</p>'+
+        cuerpo+
+        '<p class="nudge" id="nudge"></p>'+
+        '<div class="acciones justo">'+
+          '<button class="btn btn-ghost" id="atras">'+(estado.indice===0?"":("\u2190 atr\u00e1s"))+'</button>'+
+          '<button class="btn btn-primary" id="siguiente">'+(esUltima?"Buscar mis ideas":("Siguiente \u2192"))+'</button>'+
+        '</div>'
+      );
+
+      var nudge=document.getElementById("nudge");
+
+      if(q.tipo==="texto"){
+        var textarea=document.getElementById("resp"); textarea.focus();
+        textarea.addEventListener("input", function(){ estado.respuestas[q.id]=textarea.value.trim(); nudge.textContent=""; textarea.style.borderColor=""; });
+        textarea.addEventListener("keydown", function(e){ if((e.metaKey||e.ctrlKey)&&e.key==="Enter") intentarAvanzar(); });
+      } else {
+        var cont=document.getElementById("opciones");
+        var chipsEls=cont.querySelectorAll(".chip");
+        chipsEls.forEach(function(ch){
+          ch.addEventListener("click", function(){
+            var op=ch.getAttribute("data-op");
+            var sel=estado.opciones[q.id]||[];
+            if(q.multiple){
+              if(sel.indexOf(op)>=0){ sel=sel.filter(function(x){return x!==op;}); } else { sel.push(op); }
+            } else {
+              sel=[op];
+              chipsEls.forEach(function(c){ c.classList.remove("sel"); });
+            }
+            estado.opciones[q.id]=sel;
+            ch.classList.toggle("sel", sel.indexOf(op)>=0);
+            estado.respuestas[q.id]=sel.join(", ");
+            nudge.textContent="";
+          });
+        });
+      }
+
+      function intentarAvanzar(){
+        if(q.tipo==="texto"){
+          var val=(estado.respuestas[q.id]||"").trim();
+          if(q.requerida && !val){
+            nudge.textContent="Con una frase me vale, pero esta s\u00ed la necesito.";
+            var ta=document.getElementById("resp"); if(ta){ ta.style.borderColor="var(--titulo)"; ta.focus(); }
+            return;
+          }
+        } else {
+          var sel=estado.opciones[q.id]||[];
+          if(sel.length===0){ nudge.textContent="Toca al menos una opci\u00f3n."; return; }
+        }
+        avanzar();
+      }
+
+      document.getElementById("siguiente").addEventListener("click", intentarAvanzar);
+      var atras=document.getElementById("atras");
+      if(estado.indice>0){ atras.addEventListener("click", function(){ estado.indice--; pantallaPregunta(); }); }
+    }
+
+    function avanzar(){ if(estado.indice<PREGUNTAS.length-1){ estado.indice++; pantallaPregunta(); } else { pantallaCaptura(); } }
+
+    function pantallaCaptura(){
+      montar(
+        '<p class="eyebrow">Casi est\u00e1</p>'+
+        '<h2 class="titulo">\u00bfTe env\u00edo tus ideas<br/>para que no se te escapen?</h2>'+
+        '<p class="sub">Te las mando y, de vez en cuando, algo que de verdad te sirva. Sin ruido, prometido.</p>'+
+        '<div class="campo"><input class="entrada" id="email" type="email" inputmode="email" placeholder="tu@email.com" value="'+escapar(estado.email)+'" /></div>'+
+        '<p class="nudge" id="nudge"></p>'+
+        '<div class="acciones"><button class="btn btn-primary" id="ver">Ver mis 10 ideas \u2192</button></div>'+
+        '<button class="btn btn-ghost" id="omitir" style="margin-top:6px;">prefiero verlas sin dejar mi email</button>'
+      );
+      var input=document.getElementById("email"); input.focus();
+      var nudge=document.getElementById("nudge");
+      function continuar(){ estado.email=input.value.trim(); iniciarBusqueda(); }
+      document.getElementById("ver").addEventListener("click", function(){
+        var val=input.value.trim();
+        if(val && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)){ nudge.textContent="Ese email no me cuadra, \u00bflo revisas?"; input.style.borderColor="var(--titulo)"; input.focus(); return; }
+        continuar();
+      });
+      document.getElementById("omitir").addEventListener("click", function(){ input.value=""; continuar(); });
+      input.addEventListener("keydown", function(e){ if(e.key==="Enter") document.getElementById("ver").click(); });
+    }
+
+    function pantallaBuscando(){
+      montar('<div class="buscando"><div class="scanner"><span class="nucleo"></span></div><p class="mensaje" id="msg">'+MENSAJES_BUSQUEDA[0]+'</p></div>');
+      var i=0; var msg=document.getElementById("msg");
+      estado._intervalo=setInterval(function(){ i=(i+1)%MENSAJES_BUSQUEDA.length; msg.style.opacity=0; setTimeout(function(){ msg.textContent=MENSAJES_BUSQUEDA[i]; msg.style.opacity=1; },350); },2100);
+    }
+
+    function iniciarBusqueda(){
+      pantallaBuscando();
+      var inicio=Date.now();
+      pedirIdeasIA(estado.respuestas, estado.email).then(function(ideas){
+        finalizar(ideas, false, inicio);
+      }).catch(function(){
+        finalizar(generarIdeasDemo(estado.respuestas), true, inicio);
+      });
+    }
+
+    function finalizar(ideas, modoDemo, inicio){
+      if(!Array.isArray(ideas)||ideas.length===0){ ideas=generarIdeasDemo(estado.respuestas); modoDemo=true; }
+      var t=Date.now()-inicio; var min=2800;
+      var espera = t<min ? (min-t) : 0;
+      setTimeout(function(){
+        clearInterval(estado._intervalo);
+        estado.ideas=ideas; estado.modoDemo=modoDemo; pantallaResultados();
+      }, espera);
+    }
+
+    function pantallaResultados(){
+      var tarjetas=estado.ideas.map(function(idea,i){ return tarjetaIdea(idea,i); }).join("");
+      var avisoDemo=estado.modoDemo?'<div class="aviso">Estas viendo ideas de ejemplo (modo demo). Al conectar la IA, se generaran a partir de tus respuestas reales.</div>':"";
+      montar(
+        '<div class="cabecera-res">'+
+          '<p class="eyebrow">Ten\u00edas estas historias delante</p>'+
+          '<h2 class="titulo">Tus 10 ideas</h2>'+
+          '<p class="sub">Salen de lo que t\u00fa me has contado. Sin f\u00f3rmulas ni plantillas.</p>'+
+        '</div>'+
+        avisoDemo+
+        '<div class="lista-ideas">'+tarjetas+'</div>'+
+        '<div class="acciones justo">'+
+          '<button class="btn btn-secondary" id="reiniciar">Empezar de nuevo</button>'+
+          '<button class="btn btn-primary" id="cierre">Y ahora, \u00bfqu\u00e9? \u2192</button>'+
+        '</div>'
+      );
+      var cabs=document.querySelectorAll(".idea-cab");
+      cabs.forEach(function(cab){ cab.addEventListener("click", function(){ cab.closest(".idea").classList.toggle("abierta"); }); });
+      document.getElementById("reiniciar").addEventListener("click", function(){ estado.respuestas={}; estado.opciones={}; estado.indice=0; estado.ideas=[]; estado.email=""; pantallaBienvenida(); });
+      document.getElementById("cierre").addEventListener("click", pantallaCierre);
+    }
+
+    function tarjetaIdea(idea,i){
+      var num=String(i+1); if(num.length<2){ num="0"+num; }
+      function lista(arr){ return (arr||[]).map(function(x){ return '<li>'+escapar(x)+'</li>'; }).join(""); }
+      return ''+
+        '<article class="idea">'+
+          '<div class="idea-cab">'+
+            '<span class="idea-num">'+num+'</span>'+
+            '<div style="flex:1">'+
+              '<div class="idea-tit">'+escapar(idea.titulo)+'</div>'+
+              '<span class="idea-obj">Objetivo: '+escapar(idea.objetivo)+'</span>'+
+            '</div>'+
+            '<svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>'+
+          '</div>'+
+          '<div class="idea-cuerpo"><div class="idea-cuerpo-inner">'+
+            '<div class="bloque"><span class="etq">Enfoques</span><ul>'+lista(idea.enfoques)+'</ul></div>'+
+            '<div class="bloque"><span class="etq">Formatos</span><ul>'+lista(idea.formatos)+'</ul></div>'+
+            '<div class="bloque"><span class="etq">Hook sugerido</span><p class="cita">'+lineas(idea.hook)+'</p></div>'+
+            '<div class="bloque"><span class="etq">CTA sugerido</span><p>'+escapar(idea.cta)+'</p></div>'+
+          '</div></div>'+
+        '</article>';
+    }
+
+    function finalSegunObjetivo(){
+      var obj=(estado.respuestas.objetivo||"").toLowerCase();
+      if(obj.indexOf("conozcan")>=0) return "y por fin te conoci\u00f3.";
+      if(obj.indexOf("comunidad")>=0) return "y cre\u00f3 comunidad contigo.";
+      if(obj.indexOf("ventas")>=0) return "y compr\u00f3 lo que ofreces.";
+      if(obj.indexOf("referente")>=0) return "y te hizo su referente.";
+      if(obj.indexOf("confianza")>=0) return "y confi\u00f3 en ti.";
+      return "y vivi\u00f3 feliz para siempre.";
+    }
+
+    function pantallaCierre(){
+      montar(
+        '<div class="cierre">'+
+          '<p class="frase">Y color\u00edn, colorado...<br/><span class="acento">tu p\u00fablico '+escapar(finalSegunObjetivo())+'</span></p>'+
+          '<p class="sub">\u00bfVes? Estaban ah\u00ed. Todos los d\u00edas podemos descubrir nuevas ideas.</p>'+
+          '<p class="sub">Si no sabes por d\u00f3nde empezar y quieres construir una marca consistente y con intenci\u00f3n, \u00a1aqu\u00ed vuelve tu hada madrina!</p>'+
+          '<div class="acciones">'+
+            '<a class="btn btn-primary" href="https://www.martavaliente.com/#contacto" target="_blank" rel="noopener">M\u00e1s informaci\u00f3n \u2192</a>'+
+          '</div>'+
+        '</div>'
+      );
+    }
+
+    function pedirIdeasIA(respuestas, email){
+      var ctrl=new AbortController();
+      var t=setTimeout(function(){ ctrl.abort(); }, 45000);
+      return fetch("/api/generate",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({respuestas:respuestas,email:email}), signal:ctrl.signal })
+        .then(function(res){ clearTimeout(t); if(!res.ok){ throw new Error("API no disponible"); } return res.json(); })
+        .then(function(data){ if(!data||!Array.isArray(data.ideas)){ throw new Error("Respuesta inesperada"); } return data.ideas; });
+    }
+
+    function generarIdeasDemo(r){
+      var dedicas=(r.dedicas||"lo que haces").trim();
+      return [
+        { titulo:"Por qu\u00e9 comunico (y trabajo) desde lo aut\u00e9ntico", objetivo:"Conexi\u00f3n", enfoques:["Tu historia de origen","Tus valores","Por qu\u00e9 haces lo que haces"], formatos:["Post de texto","Reel a c\u00e1mara"], hook:["No tengo una f\u00f3rmula con nombre propio.","Ni un m\u00e9todo cerrado.","Solo una manera de hacer las cosas: de verdad."], cta:"\u00bfT\u00fa desde d\u00f3nde comunicas? Cu\u00e9ntamelo." },
+        { titulo:"El diario donde escrib\u00eda de peque\u00f1a (y lo que dice de mi trabajo de hoy)", objetivo:"Conexi\u00f3n", enfoques:["An\u00e9cdota de la infancia","Met\u00e1fora con tu profesi\u00f3n"], formatos:["Post de texto","Carrusel"], hook:["De peque\u00f1a escrib\u00eda hasta canciones a mis animales.","Hoy escribo para marcas.","Resulta que no he cambiado tanto."], cta:"\u00bfQu\u00e9 hac\u00edas de peque\u00f1a que hoy explica a qu\u00e9 te dedicas?" },
+        { titulo:"Qu\u00e9 significa de verdad 'sin ruido y con intenci\u00f3n'", objetivo:"Autoridad", enfoques:["Tu punto de vista","Mito vs realidad"], formatos:["Carrusel","Post de opini\u00f3n"], hook:["Publicar mucho no es comunicar.","A veces es solo ruido.","Y el ruido no conecta con nadie."], cta:"\u00bfPublicas con intenci\u00f3n o por publicar? S\u00e9 sincero/a." },
+        { titulo:"Una conversaci\u00f3n de esta semana que me hizo pensar", objetivo:"Conexi\u00f3n", enfoques:["An\u00e9cdota cotidiana","Lecci\u00f3n impl\u00edcita","Reflexi\u00f3n"], formatos:["Post de texto","Reel a c\u00e1mara"], hook:["Esta semana pas\u00f3 algo de lo m\u00e1s normal.","Una charla cualquiera.","Y me dej\u00f3 d\u00e1ndole vueltas un buen rato."], cta:"\u00bfQu\u00e9 te ha pasado a ti esta semana que dar\u00eda para un post?" },
+        { titulo:"La pregunta que m\u00e1s me repiten mis clientes", objetivo:"Confianza", enfoques:["FAQ contada como historia","Derribar una objeci\u00f3n"], formatos:["Carrusel","V\u00eddeo corto"], hook:["Hay una pregunta que me hacen casi todos.","Y la respuesta no suele ser la que esperan."], cta:"\u00bfCu\u00e1l es la duda que m\u00e1s te frena a ti? Preg\u00fantame." },
+        { titulo:"Por qu\u00e9 las marcas aut\u00e9nticas se notan (y conectan)", objetivo:"Posicionamiento", enfoques:["Tu filosof\u00eda","Ejemplo de marca con valores"], formatos:["Carrusel","Post de texto"], hook:["Cuando una marca intenta parecer lo que no es, se nota.","Y cuando es de verdad, tambi\u00e9n se nota."], cta:"\u00bfTu marca se muestra tal y como es?" },
+        { titulo:"Lo que el cine me ense\u00f1\u00f3 sobre contar historias", objetivo:"Inspiraci\u00f3n", enfoques:["Cultura pop como met\u00e1fora","Storytelling aplicado a marca"], formatos:["Carrusel","Reel"], hook:["Llevo toda la vida pensando en las musara\u00f1as.","Creando historias en mi cabeza.","El cine tiene mucho que ver con c\u00f3mo trabajo hoy."], cta:"\u00bfQu\u00e9 peli o serie te ense\u00f1\u00f3 algo sin pretenderlo?" },
+        { titulo:"Empezar de cero (y por qu\u00e9 no pasa nada)", objetivo:"Conexi\u00f3n", enfoques:["Tu proceso real","Vulnerabilidad","Aprendizaje"], formatos:["Post de texto","Reel a c\u00e1mara"], hook:["Estoy construyendo mi marca desde cero.","Con calma.","Probando, aprendiendo y equivoc\u00e1ndome."], cta:"\u00bfT\u00fa tambi\u00e9n est\u00e1s empezando? Te leo, sin juzgar." },
+        { titulo:"El miedo que aparece justo antes de darle a 'publicar'", objetivo:"Conexi\u00f3n", enfoques:["Empat\u00eda","Tu experiencia","Reflexi\u00f3n"], formatos:["Post de texto","Reel a c\u00e1mara"], hook:["El miedo aparece siempre en el mismo momento.","Justo cuando vas a pulsar 'publicar'."], cta:"\u00bfCu\u00e1l es tu miedo al publicar?" },
+        { titulo:"C\u00f3mo ayudo a "+dedicas+" a encontrar su historia", objetivo:"Decisi\u00f3n", enfoques:["Detr\u00e1s de tu proceso","Caso real sin humo"], formatos:["Carrusel","Testimonio en v\u00eddeo"], hook:["No llego con una plantilla.","Llego a escuchar, observar","y entender qu\u00e9 quiere decir cada proyecto."], cta:"Si quieres encontrar la tuya, escr\u00edbeme y lo vemos." },
+      ];
+    }
+
+    pantallaBienvenida();
+  })();
+  </script>
+</body>
+</html>
