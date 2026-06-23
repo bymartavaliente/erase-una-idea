@@ -244,22 +244,22 @@
       montar(
         '<p class="eyebrow">Casi est\u00e1</p>'+
         '<h2 class="titulo">\u00bfTe env\u00edo tus ideas<br/>para que no se te escapen?</h2>'+
-        '<p class="sub">Te las mando y, de vez en cuando, algo que de verdad te sirva. Sin ruido, prometido.</p>'+
+        '<p class="sub">D\u00e9jame tu correo y te las mando. As\u00ed no se te escapan. Sin ruido, prometido.</p>'+
         '<div class="campo"><input class="entrada" id="email" type="email" inputmode="email" placeholder="tu@email.com" value="'+escapar(estado.email)+'" /></div>'+
         '<p class="nudge" id="nudge"></p>'+
-        '<div class="acciones"><button class="btn btn-primary" id="ver">Ver mis 10 ideas \u2192</button></div>'+
-        '<button class="btn btn-ghost" id="omitir" style="margin-top:6px;">prefiero verlas sin dejar mi email</button>'
+        '<div class="acciones"><button class="btn btn-primary" id="ver">Ver mis 10 ideas \u2192</button></div>'
       );
       var input=document.getElementById("email"); input.focus();
       var nudge=document.getElementById("nudge");
-      function continuar(){ estado.email=input.value.trim(); iniciarBusqueda(); }
-      document.getElementById("ver").addEventListener("click", function(){
+      function intentar(){
         var val=input.value.trim();
-        if(val && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)){ nudge.textContent="Ese email no me cuadra, \u00bflo revisas?"; input.style.borderColor="var(--titulo)"; input.focus(); return; }
-        continuar();
-      });
-      document.getElementById("omitir").addEventListener("click", function(){ input.value=""; continuar(); });
-      input.addEventListener("keydown", function(e){ if(e.key==="Enter") document.getElementById("ver").click(); });
+        if(!val){ nudge.textContent="Necesito tu correo para enviarte las ideas."; input.style.borderColor="var(--titulo)"; input.focus(); return; }
+        if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)){ nudge.textContent="Ese email no me cuadra, \u00bflo revisas?"; input.style.borderColor="var(--titulo)"; input.focus(); return; }
+        estado.email=val; iniciarBusqueda();
+      }
+      document.getElementById("ver").addEventListener("click", intentar);
+      input.addEventListener("input", function(){ nudge.textContent=""; input.style.borderColor=""; });
+      input.addEventListener("keydown", function(e){ if(e.key==="Enter") intentar(); });
     }
 
     function pantallaBuscando(){
