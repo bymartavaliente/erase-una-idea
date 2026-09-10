@@ -121,13 +121,14 @@
     .aviso { background:var(--acento-suave); border:1px solid var(--rosa-medio); border-radius:var(--radio-sm); padding:12px 16px; font-size:0.85rem; color:var(--complementario); margin-top:18px; }
 
     .hada { display:flex; flex-direction:row-reverse; align-items:center; gap:26px; margin:46px 0; }
-    .hada-foto-wrap {
-      position:relative; width:66%; max-width:460px; flex-shrink:0;
-      animation:foto-flota 5s ease-in-out infinite;
-      background:var(--complementario);
-      padding:12px;
-      border-radius:16px;
-      box-shadow:0 20px 40px -20px rgba(137,52,52,0.45);
+   .hada-foto-wrap {
+  position:relative; width:66%; max-width:460px; flex-shrink:0;
+  animation:foto-flota 5s ease-in-out infinite;
+  background:var(--rosa-medio);
+  padding:12px;
+  border-radius:16px;
+  box-shadow:0 20px 40px -20px rgba(255,51,94,0.25);
+}
     }
     @keyframes foto-flota { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
     .hada-foto { display:block; width:100%; height:auto; border-radius:8px; }
