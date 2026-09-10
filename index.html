@@ -33,16 +33,26 @@
       display:flex; flex-direction:column; position:relative; overflow-x:hidden;
     }
     .deco { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
-    .blob { position:absolute; border-radius:50% 50% 48% 52% / 55% 45% 55% 45%; filter:blur(45px); }
+    .blob { position:absolute; border-radius:50% 50% 48% 52% / 55% 45% 55% 45%; filter:blur(45px); transition:transform 900ms cubic-bezier(0.22,1,0.36,1); }
     .blob.b1 { width:360px; height:360px; background:#FFC4D3; opacity:0.55; top:-90px; right:-70px; }
     .blob.b2 { width:320px; height:320px; background:var(--titulo); opacity:0.10; bottom:-110px; left:-90px; }
     .blob.b3 { width:240px; height:240px; background:var(--complementario); opacity:0.07; top:42%; left:-70px; }
-    .app { position:relative; z-index:1; flex:1; width:100%; max-width:var(--ancho); margin:0 auto; padding:7vh 24px 40px; display:flex; flex-direction:column; justify-content:center; }
+
+    .destacado { position:relative; display:inline-block; padding:0 5px; white-space:nowrap; }
+    .destacado::after { content:""; position:absolute; left:-7px; right:-7px; top:-5px; bottom:-7px; border:2px solid var(--titulo); border-radius:52% 48% 45% 55% / 58% 52% 48% 42%; transform:rotate(-2deg); opacity:0.65; pointer-events:none; z-index:-1; }
+    .app { position:relative; z-index:1; flex:1; width:100%; max-width:var(--ancho); margin:0 auto; padding:7vh 24px 40px; display:flex; flex-direction:column; justify-content:flex-start; }
     .footer { position:relative; z-index:1; text-align:center; padding:24px; font-size:0.82rem; color:rgba(137,52,52,0.6); }
     .footer a { color:var(--titulo); text-decoration:none; }
     .footer a:hover { text-decoration:underline; }
     .screen { animation:aparecer var(--transicion) both; }
     @keyframes aparecer { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+
+    .aparece { opacity:0; transition:opacity 720ms cubic-bezier(0.22,1,0.36,1), transform 720ms cubic-bezier(0.22,1,0.36,1); will-change:opacity, transform; }
+    .aparece[data-dir="up"] { transform:translateY(34px); }
+    .aparece[data-dir="left"] { transform:translateX(-38px) rotate(-2deg); }
+    .aparece[data-dir="right"] { transform:translateX(38px) rotate(2deg); }
+    .aparece[data-dir="pop"] { transform:scale(0.82) translateY(10px); }
+    .aparece.visible { opacity:1; transform:none; }
     .eyebrow { font-family:var(--font-body); text-transform:uppercase; letter-spacing:0.18em; font-size:0.72rem; font-weight:700; color:var(--complementario); margin-bottom:18px; }
     h1.display { font-family:var(--font-display); font-weight:700; font-size:clamp(2.6rem,8vw,4.4rem); line-height:1.02; letter-spacing:-0.01em; margin-bottom:22px; color:var(--titulo); }
     h2.titulo { font-family:var(--font-serif); font-weight:700; font-size:clamp(1.7rem,5vw,2.5rem); line-height:1.15; margin-bottom:14px; color:var(--titulo); }
@@ -109,6 +119,41 @@
     .cierre .frase .acento { color:var(--titulo); }
     .cierre .acciones { justify-content:center; margin-top:30px; }
     .aviso { background:var(--acento-suave); border:1px solid var(--rosa-medio); border-radius:var(--radio-sm); padding:12px 16px; font-size:0.85rem; color:var(--complementario); margin-top:18px; }
+
+    .hada { display:flex; flex-direction:row-reverse; align-items:center; gap:26px; margin:46px 0; }
+    .hada-foto-wrap { position:relative; width:44%; max-width:280px; flex-shrink:0; animation:foto-flota 5s ease-in-out infinite; }
+    @keyframes foto-flota { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
+    .hada-foto { display:block; width:100%; height:auto; filter:drop-shadow(0 24px 26px rgba(137,52,52,0.25)); }
+    .hada-estrella { position:absolute; top:2%; left:2%; z-index:3; font-size:1.7rem; animation:estrella-flota 2.6s ease-in-out infinite; }
+    @keyframes estrella-flota { 0%,100%{ transform:translateY(0) rotate(-8deg); } 50%{ transform:translateY(-7px) rotate(8deg); } }
+    .hada-texto { flex:1; text-align:left; }
+    .hada-texto .hada-eyebrow { font-family:var(--font-serif); font-style:italic; font-weight:700; font-size:1.2rem; color:var(--titulo); margin-bottom:8px; line-height:1.25; }
+    .hada-texto p.hada-p { font-size:0.98rem; color:rgba(26,26,26,0.78); margin-bottom:6px; }
+    @media (max-width:560px) {
+      .hada { flex-direction:column-reverse; }
+      .hada-foto-wrap { width:70%; max-width:220px; }
+    }
+
+    .objeciones { margin:30px 0; }
+
+    .seccion-cab { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .seccion-cab .barra { width:28px; height:3px; background:var(--titulo); border-radius:2px; flex-shrink:0; }
+    .seccion-cab .rotulo { font-family:var(--font-body); text-transform:uppercase; letter-spacing:0.16em; font-weight:800; font-size:0.76rem; color:var(--complementario); }
+
+    .scroll-cards { display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 4px 16px; margin:0 -4px; -webkit-overflow-scrolling:touch; }
+    .scroll-cards::-webkit-scrollbar { height:5px; }
+    .scroll-cards::-webkit-scrollbar-thumb { background:var(--rosa-medio); border-radius:10px; }
+    .mini-card { scroll-snap-align:start; flex:0 0 76%; background:#fff; border-radius:22px; padding:24px 22px; box-shadow:var(--sombra-sutil); }
+    .mini-card .mini-card-icono { font-size:1.05rem; color:var(--titulo); margin-bottom:10px; display:block; }
+    .mini-card p.mini-card-texto { font-family:var(--font-serif); font-size:1.02rem; font-weight:600; color:var(--tinta); line-height:1.4; }
+    .mini-card p.mini-card-r { font-size:0.9rem; color:rgba(26,26,26,0.66); margin-top:8px; font-family:var(--font-body); font-weight:400; }
+    @media (min-width:600px) { .mini-card { flex-basis:46%; } }
+
+    .marquesina-final { overflow:hidden; white-space:nowrap; margin:34px -24px 4px; }
+    .marquesina-final .track { display:inline-flex; animation:marquesina-scroll 13s linear infinite; }
+    .marquesina-final span { font-family:var(--font-display); font-weight:700; font-size:clamp(2.1rem,9vw,3.4rem); color:var(--titulo); opacity:0.14; padding-right:0.55em; white-space:nowrap; }
+    @keyframes marquesina-scroll { from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
     @media (max-width:560px) { .app{padding:5vh 18px 30px;} .idea-cuerpo-inner{padding-left:22px;} .acciones.justo{gap:4px;} }
   </style>
 </head>
@@ -137,7 +182,32 @@
 
     var estado = { indice:0, respuestas:{}, opciones:{}, email:"", ideas:[], modoDemo:false };
 
+    (function inicializarParallax(){
+      var blobs = document.querySelectorAll(".blob");
+      if(!blobs.length) return;
+      var activo = false;
+      function mover(x, y){
+        blobs.forEach(function(b, i){
+          var factor = (i + 1) * 9;
+          b.style.transform = "translate("+(x*factor)+"px,"+(y*factor)+"px)";
+        });
+      }
+      window.addEventListener("mousemove", function(e){
+        activo = true;
+        var x = (e.clientX / window.innerWidth) - 0.5;
+        var y = (e.clientY / window.innerHeight) - 0.5;
+        mover(x, y);
+      });
+      window.addEventListener("deviceorientation", function(e){
+        if(activo || e.gamma==null || e.beta==null) return;
+        var x = Math.max(-1, Math.min(1, e.gamma / 30));
+        var y = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+        mover(x, y);
+      });
+    })();
+
     function montar(html){ app.innerHTML = '<section class="screen">'+html+'</section>'; }
+
     function escapar(txt){ var d=document.createElement("div"); d.textContent = txt==null?"":String(txt); return d.innerHTML; }
     function lineas(arr){ return (arr||[]).map(escapar).join("<br/>"); }
 
@@ -148,17 +218,80 @@
         '<div class="historia">'+
           '<p>Una persona que cre\u00eda que su problema para crear contenido era la falta de ideas. No es que no tuviera \u2014creaba contenido\u2014, pero todo le sal\u00eda gen\u00e9rico y sus publicaciones no recib\u00edan interacci\u00f3n.</p>'+
           '<p>Se frustraba. Pensaba que quiz\u00e1 el problema era su sector... aunque a la competencia s\u00ed le funcionaba.</p>'+
-          '<p>Hasta que encontr\u00f3 este cuestionario. Lleg\u00f3 su hada madrina valiente.</p>'+
         '</div>'+
+
+        '<div class="dolores aparece" data-dir="up">'+
+          '<div class="seccion-cab"><span class="barra"></span><span class="rotulo">Reconoces esto</span></div>'+
+          '<div class="scroll-cards">'+
+            '<div class="mini-card"><span class="mini-card-icono">\u2726</span><p class="mini-card-texto">Abrir el editor y quedarte en blanco.</p></div>'+
+            '<div class="mini-card"><span class="mini-card-icono">\u2726</span><p class="mini-card-texto">Copiar lo que hace la competencia, sin saber si te pega a ti.</p></div>'+
+            '<div class="mini-card"><span class="mini-card-icono">\u2726</span><p class="mini-card-texto">Publicar... y escuchar silencio.</p></div>'+
+          '</div>'+
+        '</div>'+
+
+        '<div class="historia">'+
+          '<p class="aparece" data-dir="left">Hasta que encontr\u00f3 este cuestionario. Lleg\u00f3 su hada madrina valiente.</p>'+
+        '</div>'+
+
+        '<div class="hada aparece" data-dir="pop">'+
+          '<div class="hada-foto-wrap">'+
+            '<img class="hada-foto" src="./img/marta-hada.png" alt="Marta Valiente" />'+
+            '<span class="hada-estrella">\u2728</span>'+
+          '</div>'+
+          '<div class="hada-texto">'+
+            '<p class="hada-eyebrow">Y entonces apareci\u00f3 su hada madrina</p>'+
+            '<p class="hada-p">Soy Marta. Ayudo a marcas y proyectos a encontrar las palabras que ya ten\u00edan dentro, pero no sab\u00edan sacar.</p>'+
+            '<p class="hada-p">No hago magia \u2014 hago preguntas. Las correctas.</p>'+
+          '</div>'+
+        '</div>'+
+
         '<div class="claves">'+
-          '<p>\u2b50 Con solo 5 preguntas te doy 10 ideas de contenido.</p>'+
-          '<p>\u2b50 \u00bfC\u00f3mo? Conoci\u00e9ndote un poco y, sobre todo, lo que escuchas de tus clientes (eso es contenido en estado puro).</p>'+
+          '<p class="aparece" data-dir="right" style="transition-delay:40ms">\u2b50 Con solo 5 preguntas te doy <span class="destacado">10 ideas</span> de contenido.</p>'+
+          '<p class="aparece" data-dir="right" style="transition-delay:150ms">\u2b50 \u00bfC\u00f3mo? Conoci\u00e9ndote un poco y, sobre todo, lo que escuchas de tus clientes (eso es contenido en estado puro).</p>'+
         '</div>'+
-        '<p class="lead">\ud83d\udc49 As\u00ed que hazlo y tendr\u00e1s tu final de cuento.</p>'+
-        '<div class="acciones"><button class="btn btn-primary" id="empezar">Empezar \u2192</button></div>'+
-        '<p class="micro">Menos de 1 minuto - sin ruido</p>'
+
+        '<div class="objeciones aparece" data-dir="up">'+
+          '<div class="seccion-cab"><span class="barra"></span><span class="rotulo">Antes de pedir tu deseo</span></div>'+
+          '<div class="scroll-cards">'+
+            '<div class="mini-card">'+
+              '<p class="mini-card-texto">\u00bfY si mi sector es muy t\u00e9cnico o "aburrido"?</p>'+
+              '<p class="mini-card-r">Da igual el sector: las preguntas buscan lo que t\u00fa sabes, no lo que "deber\u00eda" sonar interesante.</p>'+
+            '</div>'+
+            '<div class="mini-card">'+
+              '<p class="mini-card-texto">\u00bfY si ya lo he intentado todo?</p>'+
+              '<p class="mini-card-r">No busca ideas nuevas de la nada, busca las tuyas \u2014 las que ya tienes, pero no hab\u00edas visto.</p>'+
+            '</div>'+
+            '<div class="mini-card">'+
+              '<p class="mini-card-texto">\u00bfCu\u00e1nto tiempo me va a quitar?</p>'+
+              '<p class="mini-card-r">Menos de lo que tardas en decidir qu\u00e9 publicar hoy.</p>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+
+        '<p class="lead aparece" data-dir="up">\ud83d\udc49 As\u00ed que hazlo y tendr\u00e1s tu final de cuento.</p>'+
+        '<div class="marquesina-final aparece" data-dir="pop" aria-hidden="true"><div class="track">'+
+          '<span>EMPEZAR \u2726 EMPEZAR \u2726 EMPEZAR \u2726 EMPEZAR \u2726 </span>'+
+          '<span>EMPEZAR \u2726 EMPEZAR \u2726 EMPEZAR \u2726 EMPEZAR \u2726 </span>'+
+        '</div></div>'+
+        '<div class="acciones aparece" data-dir="pop"><button class="btn btn-primary" id="empezar">Empezar \u2192</button></div>'+
+        '<p class="micro">Menos de 1 minuto - merecer\u00e1 la pena</p>'
       );
       document.getElementById("empezar").addEventListener("click", function(){ estado.indice=0; pantallaPregunta(); });
+      activarApariciones();
+    }
+
+    function activarApariciones(){
+      var els = document.querySelectorAll(".aparece");
+      if(!("IntersectionObserver" in window)){ els.forEach(function(el){ el.classList.add("visible"); }); return; }
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold:0.15, rootMargin:"0px 0px -60px 0px" });
+      els.forEach(function(el){ obs.observe(el); });
     }
 
     function pantallaPregunta(){
